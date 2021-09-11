@@ -1,4 +1,5 @@
 const path = require('path');
+const ReactRule = require('./rules/ReactRules');
 
 module.exports = {
     mode: 'development',
@@ -6,5 +7,10 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.resolve('static/public/JS/'),
+    },
+    module: {
+        rules: [
+            ReactRule
+        ]
     }
 }
