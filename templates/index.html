@@ -1,7 +1,7 @@
 {% extends "/layout/layout.html" %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='/CSS/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='public/CSS/index.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@
     <a href="/agua" class="m-3">
         <div class="card card-custom">
             <div class="card-body">
-                <img class="img-fluid" src="{{ url_for('static', filename='/IMG/agua.svg') }}" alt="">
+                <img class="img-fluid" src="{{ url_for('static', filename='public/IMG/agua.svg') }}" alt="">
             </div>
             <div class="card-hover">
                 <h3>Agua</h2>
@@ -19,7 +19,7 @@
     <a href="/tienda" class="m-3">
         <div class="card card-custom">
             <div class="card-body card-custom">
-                <img class="img-fluid" src="{{ url_for('static', filename='/IMG/tienda.svg') }}" alt="">
+                <img class="img-fluid" src="{{ url_for('static', filename='public/IMG/tienda.svg') }}" alt="">
             </div>
             <div class="card-hover">
                 <h3>Tienda</h2>

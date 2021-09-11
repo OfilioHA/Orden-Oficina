@@ -1,0 +1,16 @@
+{
+  "name": "app_oficina",
+  "version": "1.0.0",
+  "description": "App para llevar orden en la oficina.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --config webpack.config.js --watch"
+  },
+  "author": "Ofilio Herdocia Arauz",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
+  }
+}
