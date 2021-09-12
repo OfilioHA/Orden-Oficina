@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRule = require('./rules/ReactRules');
 const StyleRule = require('./rules/StylesRules');
+const ImgRule = require('./rules/ImgRules');
 
 module.exports = {
     mode: 'development',
@@ -13,7 +14,8 @@ module.exports = {
     module: {
         rules: [
             ReactRule,
-            StyleRule
+            StyleRule,
+            ImgRule
         ]
     },
     plugins: [        

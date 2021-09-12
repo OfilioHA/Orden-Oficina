@@ -1,5 +1,10 @@
+import { MenuItemHome } from "../components/home/menuItemHome.jsx";
+
 export function Home(){
     return(
-        <h1>Soy el Home</h1>
+        <main className="min-vh-100 d-flex justify-content-center align-items-center flex-wrap">
+            <nav>Hello World</nav>
+            <MenuItemHome />
+        </main>
     );
 }
