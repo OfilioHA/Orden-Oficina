@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../sass/index.scss';
-import React from 'react';
+import { App } from './app.jsx';
 import ReactDom from 'react-dom';
 
 ReactDom.render(
-    <h1>Hello JSX</h1>,
+    <App />,
     document.getElementById('app')
 )
 
