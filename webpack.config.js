@@ -1,5 +1,6 @@
 const path = require('path');
 const ReactRule = require('./rules/ReactRules');
+const StyleRule = require('./rules/StylesRules');
 
 module.exports = {
     mode: 'development',
@@ -10,7 +11,8 @@ module.exports = {
     },
     module: {
         rules: [
-            ReactRule
+            ReactRule,
+            StyleRule
         ]
     }
 }
