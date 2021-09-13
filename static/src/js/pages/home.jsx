@@ -1,6 +1,7 @@
 import { MenuItemHome } from "../components/home/menuItemHome.jsx";
 import aguaSvg from '../../img/agua.svg';
 import tiendaSvg from '../../img/tienda.svg';
+import fumigadorSvg from '../../img/fumigator.svg';
 import { Container, Row } from "react-bootstrap";
 
 export function Home() {
@@ -11,32 +12,25 @@ export function Home() {
             image: aguaSvg
         },
         {
-            url: '/tienda',
-            image: tiendaSvg
+            url: '/fumigacion',
+            image: fumigadorSvg
         },
         {
             url: '/tienda',
             image: tiendaSvg
         },
-        {
-            url: '/tienda',
-            image: tiendaSvg
-        }
     ]
 
     return (
-        <div>
-            <h1>Hello World</h1>
-            <Container>
-                <Row className="justify-content-around"> 
-                    {urlArray.map(({ url, image }, index) => {
-                        return (<MenuItemHome
-                            url={url}
-                            image={image}
-                            key={index} />)
-                    })}
-                </Row>
-            </Container>
-        </div>
+        <Container>
+            <Row className="justify-content-around align-items-center min-vh-100">
+                {urlArray.map(({ url, image }, index) => {
+                    return (<MenuItemHome
+                        url={url}
+                        image={image}
+                        key={index} />)
+                })}
+            </Row>
+        </Container>
     );
 }

@@ -7,7 +7,7 @@ import { Tienda } from './pages/tienda.jsx';
   export function App() {
     return (
       <Router>
-        <div>
+        <div>     
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
