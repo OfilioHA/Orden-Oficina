@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../sass/index.scss';
 import { App } from './app.jsx';
 import ReactDom from 'react-dom';
 

@@ -8,20 +8,6 @@ import { Tienda } from './pages/tienda.jsx';
     return (
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/agua">Agua</Link>
-              </li>
-              <li>
-                <Link to="/tienda">Tienda</Link>
-              </li>
-            </ul>
-          </nav>
-
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
