@@ -6,10 +6,10 @@ const ImgRule = require('./rules/ImgRules');
 
 module.exports = {
     mode: 'development',
-    entry: './static/src/js/index.js',
+    entry: './static/src/index.js',
     output: {
         filename: '[name].js',
-        path: path.resolve('static/public/JS/'),
+        path: path.resolve('static/public'),
     },
     module: {
         rules: [

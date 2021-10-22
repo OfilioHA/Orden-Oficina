@@ -1,7 +1,9 @@
 import { MenuItemHome } from "../components/home/menuItemHome.jsx";
-import aguaSvg from '../../img/agua.svg';
-import tiendaSvg from '../../img/tienda.svg';
-import fumigadorSvg from '../../img/fumigator.svg';
+import aguaSvg from '../assets/img/agua.svg';
+import tiendaSvg from '../assets/img/tienda.svg';
+import fumigadorSvg from '../assets/img/fumigator.svg';
+import cogsSvg from '../assets/img/cogs.svg';
+import signOutSvg from '../assets/img/sign-out.svg'
 import { Container, Row } from "react-bootstrap";
 
 export function Home() {
@@ -19,6 +21,14 @@ export function Home() {
             url: '/tienda',
             image: tiendaSvg
         },
+        {
+            url: '/configuracion',
+            image: cogsSvg
+        },
+        {
+            url: '/signout',
+            image: signOutSvg
+        }
     ]
 
     return (

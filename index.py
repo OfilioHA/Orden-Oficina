@@ -13,6 +13,7 @@ app = Flask(__name__);
 @app.route('/agua')
 @app.route('/tienda')
 @app.route('/fumigacion')
+@app.route('/configuracion')
 def index():
     return render_template('index.html');
 
