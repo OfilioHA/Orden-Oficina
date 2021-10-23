@@ -1,4 +1,5 @@
-import { Header } from '../components/utils/header.jsx'
+import { Header } from '../components/utils/header.jsx';
+import { Footer } from '../components/utils/footer.jsx';
 import { Container } from 'react-bootstrap';
 
 export function LayoutBase(props){
@@ -8,7 +9,7 @@ export function LayoutBase(props){
         <Container className='py-4'>
             {props.children}
         </Container>
-        <h1>GG</h1>
+        <Footer />
         </>
     );
 }

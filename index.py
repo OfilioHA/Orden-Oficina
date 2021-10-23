@@ -14,6 +14,7 @@ app = Flask(__name__);
 @app.route('/tienda')
 @app.route('/fumigacion')
 @app.route('/configuracion')
+@app.route('/login')
 def index():
     return render_template('index.html');
 

@@ -24,10 +24,6 @@ export function Home() {
         {
             url: '/configuracion',
             image: cogsSvg
-        },
-        {
-            url: '/signout',
-            image: signOutSvg
         }
     ]
 

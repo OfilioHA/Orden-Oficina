@@ -5,29 +5,19 @@ import { Agua } from './pages/agua.jsx';
 import { Tienda } from './pages/tienda.jsx';
 import { Fumigacion } from './pages/fumigacion.jsx';
 import { Configuracion } from './pages/configuracion.jsx'
+import { Login } from './pages/login.jsx';
 
   export function App() {
     return (
       <Router>
-        <div>     
           <Switch>
-            <Route path="/agua">
-              <Agua />
-            </Route>
-            <Route path="/tienda">
-              <Tienda />
-            </Route>
-            <Route path="/fumigacion">
-              <Fumigacion />
-            </Route>
-            <Route path="/configuracion">
-              <Configuracion />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <Route path="/agua" component={Agua} />
+            <Route path="/tienda" component={Tienda} />
+            <Route path="/fumigacion" component={Fumigacion} />
+            <Route path="/configuracion" component={Configuracion} />
+            <Route path="/login" component={Login} />
+            <Route path="/" component={Home} />
           </Switch>
-        </div>
       </Router>
     );
   }

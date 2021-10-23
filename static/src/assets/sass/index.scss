@@ -1,3 +1,13 @@
+#app{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer{
+    margin-top: auto;
+}
+
 .card-custom{
     position: relative;
     box-shadow: 0.30rem 0.30rem 0.30rem rgba(0,0,0,0.20);
