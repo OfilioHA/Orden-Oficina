@@ -1,5 +1,5 @@
 import os
-from app import *
+from app import db, app
 
 def main():
     db.create_all()

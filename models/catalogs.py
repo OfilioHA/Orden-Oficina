@@ -7,8 +7,8 @@ class Action(db.Model):
     action_id = db.Column(db.Integer, db.ForeignKey('actions_ctg.id'), nullable=False, unique=True)
     created_at = db.Column(db.String, default=datetime.now(), nullable=False)
     modified_at = db.Column(db.String)
-    created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
-    modified_by = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    modified_by = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Gender(db.Model):
@@ -23,3 +23,7 @@ class ActionCtg(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12))
 
+class PersonalTypeCtg(db.Model):
+    __tablename__ = "personal_type_ctg"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(12))

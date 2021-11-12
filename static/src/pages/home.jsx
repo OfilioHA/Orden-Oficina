@@ -4,6 +4,7 @@ import tiendaSvg from '../assets/img/tienda.svg';
 import fumigadorSvg from '../assets/img/fumigator.svg';
 import cogsSvg from '../assets/img/cogs.svg';
 import signOutSvg from '../assets/img/sign-out.svg'
+import BirthdaySvg from '../assets/img/party-birth.svg'
 import { Container, Row } from "react-bootstrap";
 
 export function Home() {
@@ -22,8 +23,16 @@ export function Home() {
             image: tiendaSvg
         },
         {
+            url: '/cumpleanos',
+            image: BirthdaySvg
+        },
+        {
             url: '/configuracion',
             image: cogsSvg
+        },
+        {
+            url: '/login',
+            image: signOutSvg
         }
     ]
 

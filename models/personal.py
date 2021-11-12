@@ -7,7 +7,9 @@ class Personal(db.Model):
     names = db.Column(db.String, nullable=False)
     lastnames = db.Column(db.String, nullable=False)
     birthday = db.Column(db.String)
-    gender_id = db.Column(db.Integer, db.ForeignKey('genders_ctg.id'), nullable=False)
+    gender = db.Column(db.Integer, db.ForeignKey('genders_ctg.id'), nullable=False)
+    type = db.Column(db.Integer, db.ForeignKey('personal_type_ctg.id'), nullable=False)
+    active = db.Column(db.Boolean, default=True)
     user = db.relationship('User', backref='personal', lazy=True, foreign_keys="User.personal_id")
     systems = db.relationship('System', secondary=personal_system, lazy='subquery', backref=db.backref('system',lazy=True))
 
