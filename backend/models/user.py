@@ -1,6 +1,14 @@
 from app import db;
+from sqlalchemy_serializer import SerializerMixin;
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
+
+    serialize_rules = (
+        '-password',
+        '-personal_id',
+    )
+    
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(18))
     password = db.Column(db.String(128))
