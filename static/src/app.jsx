@@ -1,23 +1,37 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./libs/auth";
+import { Login } from "./components/login";
+import { Layout } from "./components/utils/base";
+import { Home } from "./components/home";
+import { Water } from "./components/water";
 
-import { Home } from './pages/home.jsx';
-import { Agua } from './pages/agua.jsx';
-import { Tienda } from './pages/tienda.jsx';
-import { Fumigacion } from './pages/fumigacion.jsx';
-import { Configuracion } from './pages/configuracion.jsx'
-import { Login } from './pages/login.jsx';
-
-  export function App() {
-    return (
-      <Router>
-          <Switch>
-            <Route path="/agua" component={Agua} />
-            <Route path="/tienda" component={Tienda} />
-            <Route path="/fumigacion" component={Fumigacion} />
-            <Route path="/configuracion" component={Configuracion} />
-            <Route path="/login" component={Login} />
-            <Route path="/" component={Home} />
-          </Switch>
-      </Router>
-    );
-  }
+export const App = () => {
+  const [isLogged] = useAuth();
+  return (
+    <BrowserRouter>
+      <Routes>
+        {!isLogged && (
+          <>
+            <Route 
+              path="/login" 
+              element={<Login />} 
+            />
+            <Route 
+              path="*"
+              element={<Navigate to="/login" />} 
+            />
+          </>
+        )}
+        {isLogged && (
+          <>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/water" element={<Water />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        )}
+      </Routes>
+    </BrowserRouter>
+  );
+};

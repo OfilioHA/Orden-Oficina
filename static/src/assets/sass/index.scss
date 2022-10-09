@@ -1,37 +1,12 @@
-#app{
+#app-container{
     display: flex;
     flex-direction: column;
+
+    & footer {
+        margin-top: auto;
+    }
+}
+
+.h-100{
     min-height: 100vh;
-}
-
-footer{
-    margin-top: auto;
-}
-
-.card-custom{
-    position: relative;
-    box-shadow: 0.30rem 0.30rem 0.30rem rgba(0,0,0,0.20);
-    overflow: hidden;
-}
-
-a{text-decoration: none;}
-
-.card .card-hover{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    top: 0;
-    left: 0;
-    width: 100%;
-    transition: all .4s 0s;
-    transform: translateY(100%);
-    background-color: rgb(19, 131, 206, 0.9);
-    color: #fefefe;
-
-}
-
-.card:hover .card-hover{
-    transform: translateY(0%);
 }
