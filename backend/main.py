@@ -1,4 +1,4 @@
-import os
+import os;
 from app import db, app
 
 def main():

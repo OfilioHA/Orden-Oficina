@@ -1,4 +1,5 @@
 from app import db
+from models.taskround import TaskRounds;
 from .catalogs import *
 from models.system import System
 from models.user import User
@@ -14,6 +15,7 @@ personal_system = db.Table('personal_system',
 class Personal(db.Model, SerializerMixin):
 
     serialize_rules = (
+        '-taskscan.personal',
         '-gender.personal', 
         '-type.personal', 
         '-systems.personal',
@@ -24,6 +26,7 @@ class Personal(db.Model, SerializerMixin):
     firstnames = db.Column(db.String, nullable=False)
     lastnames = db.Column(db.String, nullable=False)
     birthday = db.Column(db.String)
+    active = db.Column(db.Boolean, default=True)
     
     #Genders Relations
     gender_id = db.Column(db.Integer, db.ForeignKey("genders.id"), nullable=False)
@@ -33,7 +36,6 @@ class Personal(db.Model, SerializerMixin):
     type_id = db.Column(db.Integer, db.ForeignKey("personal_type.id"), nullable=False)
     type = db.relationship("PersonalType", backref=db.backref("personal", lazy="dynamic"))
 
-    active = db.Column(db.Boolean, default=True)
     user = db.relationship(
         "User", 
         backref="personal", 
@@ -44,6 +46,13 @@ class Personal(db.Model, SerializerMixin):
     systems = db.relationship(
         "System",
         secondary=personal_system,
+        lazy="subquery",
+        backref=db.backref("personal", lazy=True),
+    )
+
+    taskscan = db.relationship(
+        "Task",
+        secondary="task_can",
         lazy="subquery",
         backref=db.backref("personal", lazy=True),
     )

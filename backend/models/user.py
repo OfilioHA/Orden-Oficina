@@ -8,7 +8,6 @@ class User(db.Model, SerializerMixin):
         '-personal_id',
     )
     
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(18))
     password = db.Column(db.String(128))

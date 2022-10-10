@@ -32,6 +32,7 @@ cors.init_app(app)
 db.init_app(app)
 
 from controllers.personalController import *
+from controllers.taskController import *
 
 with app.app_context():
     db.create_all()
@@ -44,34 +45,7 @@ with app.app_context():
             ))
     db.session.commit()
 
-
-
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def index(path):
     return render_template("index.html")
-
-@app.route("/workers/list/fullnames")
-def prueba():
-    return personalList();
-
-
-@app.route("/api/login", methods=["POST"])
-def login():
-    req = request.get_json(force=True)
-    username = req.get("username", None)
-    password = req.get("password", None)
-    user = guard.authenticate(username, password)
-    ret = {
-        "accessToken": guard.encode_jwt_token(user),
-        "refreshToken": guard.encode_jwt_token(user),
-    }
-    return ret, 200
-
-
-@app.route("/api/refresh", methods=["POST"])
-def refresh():
-    old_token = request.get_data()
-    new_token = guard.refresh_jwt_token(old_token)
-    ret = {"refreshToken": new_token}
-    return ret, 200

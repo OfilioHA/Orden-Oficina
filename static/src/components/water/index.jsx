@@ -4,8 +4,8 @@ import { WaterList } from "./list";
 export const Water = () => {
 
   return (
-    <Row>
-      <Col md={6}>
+    <Row className="justify-content-center">
+      <Col md={7}>
           <WaterList />
       </Col>
     </Row>

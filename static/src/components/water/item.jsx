@@ -2,14 +2,29 @@ import { ListGroupItem } from "react-bootstrap";
 
 export function WaterItem(props) {
   const { firstnames, lastnames } = props;
+  const { taskaccomplished } = props;
   const fullname = firstnames + " " + lastnames;
-  console.log(props);
+
+  let remaining = 0;
+
+  if(taskaccomplished.length < 3){
+    let { length } = taskaccomplished;
+    remaining = 3 - length;
+  }
+
+  console.log(taskaccomplished);
 
   return (
-    <ListGroupItem>
-      <div className="d-flex">
-        <span style={{ fontSize: "17px" }}>{fullname}</span>
-      </div>
-    </ListGroupItem>
+    <tr>
+      <td><span style={{fontSize: "17px"}}>{fullname}</span></td>
+      {taskaccomplished.map((value, key)=> (
+        <td
+          key={key}
+        ></td> 
+      ))}
+      {remaining > 0 && (
+        <td colSpan={remaining}></td>
+      )}
+    </tr>
   );
 }
