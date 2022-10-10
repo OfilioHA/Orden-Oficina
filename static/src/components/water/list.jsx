@@ -7,6 +7,10 @@ export const WaterList = () => {
   const [persons, setPersons] = useState([]);
   const [taskOptions, setTaskOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [numberRound, setNumberRound] = useState(null);
+  const [roundOptions, setRoundOptions] = useState([]);
+
+  let numberRoundDefault = null;
 
   useEffect(() => {
     async function getData() {
@@ -21,46 +25,73 @@ export const WaterList = () => {
     getData();
   }, []);
 
-  useEffect(()=> {
-    if(!selectedOption) return;
-    async function getData(){
+  useEffect(() => {
+    if (!selectedOption) return;
+    async function getData() {
       try {
         const response = await axios.get(`/personal/${selectedOption}/tasks`);
         const { data } = response;
-        setPersons(data);
+        setPersons(data.list);
+        numberRoundDefault = data.round;
+        const rounds = Array.from({ length: data.round }, (_, i) => i + 1);
+        setRoundOptions(rounds);
       } catch (error) {
         console.log(error);
       }
     }
     getData();
-  }, [selectedOption])
+  }, [selectedOption]);
 
   return (
     <>
       <div className="border border-bottom-0 py-3 px-2">
         <h5 className="mb-3">Listado de tareas</h5>
         <div className="d-flex">
-          <Form.Select 
+          <Form.Select
             size="sm"
             defaultValue={""}
-            onClick={(e) => setSelectedOption(e.currentTarget.value)}
+            onChange={(e) => setSelectedOption(e.currentTarget.value)}
+            style={{width: "180px"}}
+            className="me-3"
           >
-            <option disabled value={""}>Seleccione una tarea</option>
+            <option disabled value={""}>
+              Seleccione una tarea
+            </option>
             {taskOptions.map(({ name, id }, key) => (
               <option key={key} value={id}>
                 {name}
               </option>
             ))}
           </Form.Select>
+          {roundOptions.length > 0 && (
+            <Form.Select 
+                size="sm" 
+                defaultValue={numberRoundDefault}
+                onChange={(e) => setNumberRound(e.currentTarget.value)}
+                style={{width: "100px"}}
+            >
+              <option disabled value={""}>
+                Seleccione una ronda
+              </option>
+              {roundOptions.map((value, key) => (
+                <option 
+                  key={key} 
+                  value={value}>
+                  {value}
+                </option>
+              ))}
+            </Form.Select>
+          )}
         </div>
       </div>
       <Table bordered hover>
         <thead>
           <tr>
             <th>Nombre</th>
-            <th colSpan={3}  className="text-center">
+            <th className="text-center">
               Veces Cumplidas
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

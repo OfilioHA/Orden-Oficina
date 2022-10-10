@@ -1,3 +1,4 @@
+from crypt import methods
 from pprint import pprint
 from app import app, db
 from models.personal import Personal;
@@ -8,7 +9,7 @@ from models.taskround import TaskRounds;
 from models.TaskCan import TaskCan;
 from models.TaskAccomplished import TaskAccomplished;
 from models.catalogs import Gender;
-from flask import jsonify;
+from flask import jsonify, request;
 
 @app.route("/personal/list")
 def personallist():
@@ -40,7 +41,7 @@ def personaltask(id):
             only=('id','firstnames', 'lastnames',),
         )
 
-        entry['taskaccomplished'] =  TaskAccomplished.query\
+        tasklist =  TaskAccomplished.query\
             .join(Task, TaskAccomplished.task_id == Task.id)\
             .join(TaskRounds, TaskAccomplished.task_round_id == TaskRounds.id)\
             .join(Personal, TaskAccomplished.personal_id == Personal.id)\
@@ -50,12 +51,22 @@ def personaltask(id):
             ).all()
 
 
-        tasklist = []
-        for task in entry['taskaccomplished']:
-            tasklist.append(task.to_dict(rules=('-personal',)));
-
-        entry['taskaccomplished'] = tasklist;
+        entry['taskaccomplished'] = []
+        for task in tasklist:
+            entry['taskaccomplished']\
+                .append(task.to_dict(
+                    rules=('-personal',)
+                )
+            );
 
         listtoreturn.append(entry);
 
-    return jsonify(listtoreturn)
+    return jsonify({
+        "list": listtoreturn,
+        "round": activeround.number
+    })
+
+@app.route("/personal/<int:id>/tasks", methods=['POST'])
+def personaltaskaccomplished():
+    req = request.get_json(force=True)
+    print(req)

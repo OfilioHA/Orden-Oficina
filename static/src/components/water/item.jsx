@@ -1,30 +1,36 @@
-import { ListGroupItem } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function WaterItem(props) {
-  const { firstnames, lastnames } = props;
+  const { id, firstnames, lastnames } = props;
   const { taskaccomplished } = props;
-  const fullname = firstnames + " " + lastnames;
-
-  let remaining = 0;
-
-  if(taskaccomplished.length < 3){
-    let { length } = taskaccomplished;
-    remaining = 3 - length;
-  }
-
-  console.log(taskaccomplished);
+  const fullname = `${firstnames} ${lastnames}`;
 
   return (
     <tr>
-      <td><span style={{fontSize: "17px"}}>{fullname}</span></td>
-      {taskaccomplished.map((value, key)=> (
-        <td
-          key={key}
-        ></td> 
-      ))}
-      {remaining > 0 && (
-        <td colSpan={remaining}></td>
-      )}
+      <td>
+        <span style={{ fontSize: "17px" }}>{fullname}</span>
+      </td>
+      <td>
+        <div className="d-flex justify-content-between">
+          {taskaccomplished.map((value, key) => (
+            <Button
+              key={key}
+              size="sm"
+              value={value.id}
+              className="rounded-circle"
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </Button>
+          ))}
+        </div>
+      </td>
+      <td>
+        <Button size="sm" value={id}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </td>
     </tr>
   );
 }
