@@ -15,7 +15,7 @@ export function TaskItem(props) {
   const findTask = (e) => {
     const { value } = e.currentTarget;
     const task = taskaccomplished
-      .filter((element) => (element.id = value))
+      .filter((element) => (element.id == value))
       .pop();
     setTaskPerson({
       id,
@@ -23,8 +23,6 @@ export function TaskItem(props) {
       task: { ...task },
     });
   };
-
-  console.log(taskInfo["round"]["actual"], taskInfo["round"]["last"]);
 
   const newTask = () => {
     setTaskPerson({

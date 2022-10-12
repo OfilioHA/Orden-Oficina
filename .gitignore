@@ -4,3 +4,4 @@ __pycache__
 /.idea
 /Pipfile.lock
 /.vscode
+/backend/database/*

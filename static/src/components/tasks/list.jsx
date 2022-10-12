@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Table, Form } from "react-bootstrap";
-import { useRecoilState } from "recoil";
-import { taskInfoStore } from "../../stores/taskPerson";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { taskInfoStore, taskPersonStore } from "../../stores/taskPerson";
 import { TaskItem } from "./item";
 
 export const TaskList = () => {
@@ -10,6 +10,8 @@ export const TaskList = () => {
   const [persons, setPersons] = useState([]);
   const [taskOptions, setTaskOptions] = useState([]);
   const [roundOptions, setRoundOptions] = useState([]);
+  const resetTaskInfoStore = useResetRecoilState(taskInfoStore);
+  const resetTaskPersonStore = useResetRecoilState(taskPersonStore);
 
   let numberRoundDefault = null;
 
@@ -24,6 +26,10 @@ export const TaskList = () => {
       }
     }
     getData();
+    return () => {
+      resetTaskInfoStore()
+      resetTaskPersonStore()
+    };
   }, []);
 
   useEffect(() => {
@@ -38,8 +44,8 @@ export const TaskList = () => {
         setTaskInfo({
           ...taskInfo,
           ["round"]: {
-              actual: parseInt(numberRoundDefault),
-              last: parseInt(numberRoundDefault),
+            actual: parseInt(numberRoundDefault),
+            last: parseInt(numberRoundDefault),
           },
         });
         setRoundOptions(rounds);
@@ -117,9 +123,19 @@ export const TaskList = () => {
           </tr>
         </thead>
         <tbody>
-          {persons.map((person, index) => {
-            return <TaskItem key={index} {...person} />;
-          })}
+          {!taskInfo["task"] && (
+            <tr>
+              <td colSpan={3} className="py-4">
+                <div className="d-flex justify-content-center">
+                  <h5>No se seleccionado una tarea</h5>
+                </div>
+              </td>
+            </tr>
+          )}
+          {persons.length > 0 &&
+            persons.map((person, index) => {
+              return <TaskItem key={index} {...person} />;
+            })}
         </tbody>
       </Table>
     </>

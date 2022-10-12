@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const TaskForm = () => {
   const [taskPerson, setTaskPerson] = useRecoilState(taskPersonStore);
-  const [taskInfo, setTaskInfo] = useRecoilState(taskInfoStore);
-  const textTitle = "Agregar nueva tarea";
+  const [taskInfo] = useRecoilState(taskInfoStore);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const textTitle = "Agregar nueva tarea";
 
   useEffect(() => {
     if (!taskPerson) return;
