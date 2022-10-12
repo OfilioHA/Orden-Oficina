@@ -3,7 +3,8 @@ import { useAuth } from "./libs/auth";
 import { Login } from "./components/login";
 import { Layout } from "./components/utils/base";
 import { Home } from "./components/home";
-import { Water } from "./components/water";
+import { Task } from "./components/tasks";
+import { Birthdays } from "./components/birthdays";
 
 export const App = () => {
   const [isLogged] = useAuth();
@@ -25,10 +26,11 @@ export const App = () => {
         {isLogged && (
           <>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="/water" element={<Water />} />
+              <Route path="home" index element={<Home />} />
+              <Route path="tasks" element={<Task />} />
+              <Route path="birthdays" element={<Birthdays />} />
             </Route>
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/home" />} />
           </>
         )}
       </Routes>

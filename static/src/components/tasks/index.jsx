@@ -1,13 +1,13 @@
 import { Row, Col } from "react-bootstrap";
-import { WaterList } from "./list";
+import { TaskList } from "./list";
 import { TaskForm } from "./form";
 
-export const Water = () => {
+export const Task = () => {
 
   return (
     <Row className="justify-content-between">
       <Col md={7}>
-          <WaterList />
+          <TaskList />
       </Col>
       <Col md={5}>
         <TaskForm />

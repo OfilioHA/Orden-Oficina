@@ -13,6 +13,7 @@ class TaskAccomplished(db.Model, SerializerMixin):
     task_round_id = db.Column(db.Integer, db.ForeignKey('task_rounds.id'), nullable=False)
     personal_id = db.Column(db.Integer, db.ForeignKey('personal.id'), nullable=False)
     date = db.Column(db.String, nullable=False)
+    time = db.Column(db.String, nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     modified_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.String, default=datetime.now(), nullable=False)

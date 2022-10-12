@@ -10,3 +10,22 @@
 .h-100{
     min-height: 100vh;
 }
+
+.task-buttons{
+
+    padding: 0 1rem;
+
+    & > .task-button-container{
+        width: 33%;
+        display: flex;
+        justify-content: center;        
+        
+        & > button{
+            margin-right: 2rem;
+        }
+    
+        & > button:last-child{
+            margin-right: 0;
+        }
+    }
+}

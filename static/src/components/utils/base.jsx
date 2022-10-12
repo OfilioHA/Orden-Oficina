@@ -11,7 +11,7 @@ export function Layout(props) {
         <div style={{ width: "100%" }} id="app-container">
           <div className="py-4">
             <Container>
-                <Outlet />
+              <Outlet />
             </Container>
           </div>
           <Footer />

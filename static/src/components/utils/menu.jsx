@@ -10,22 +10,17 @@ export function SideBar() {
     {
       title: "Home",
       icon: faHouse,
-      to: "/",
+      to: "/home",
     },
     {
       title: "Agua",
       icon: faDroplet,
-      to: "/water",
-    },
-    {
-      title: "Venta",
-      icon: faStore,
-      to: "/tienda",
+      to: "/tasks",
     },
     {
       title: "Cumpleaños",
       icon: faCakeCandles,
-      to: "/cumpleaños",
+      to: "/birthdays",
     },
   ];
 
@@ -67,7 +62,7 @@ export function SideBar() {
                   <Tooltip id={`tooltip-logout`}>
                     <strong>Salir</strong>
                   </Tooltip>
-                }
+                } 
               >
                 <Nav.Link
                   onClick={logout}

@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Table, Form } from "react-bootstrap";
-import { WaterItem } from "./item";
+import { useRecoilState } from "recoil";
+import { taskInfoStore } from "../../stores/taskPerson";
+import { TaskItem } from "./item";
 
-export const WaterList = () => {
+export const TaskList = () => {
+  const [taskInfo, setTaskInfo] = useRecoilState(taskInfoStore);
   const [persons, setPersons] = useState([]);
   const [taskOptions, setTaskOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [numberRound, setNumberRound] = useState(null);
   const [roundOptions, setRoundOptions] = useState([]);
 
   let numberRoundDefault = null;
@@ -15,7 +16,7 @@ export const WaterList = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.get("/tasks");
+        const response = await axios.get("/tasks/list");
         const { data } = response;
         setTaskOptions(data);
       } catch (error) {
@@ -26,21 +27,46 @@ export const WaterList = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedOption) return;
+    if (!taskInfo["task"]) return;
     async function getData() {
       try {
-        const response = await axios.get(`/personal/${selectedOption}/tasks`);
+        const response = await axios.get(`/personal/${taskInfo["task"]}/tasks`);
         const { data } = response;
         setPersons(data.list);
         numberRoundDefault = data.round;
         const rounds = Array.from({ length: data.round }, (_, i) => i + 1);
+        setTaskInfo({
+          ...taskInfo,
+          ["round"]: {
+              actual: parseInt(numberRoundDefault),
+              last: parseInt(numberRoundDefault),
+          },
+        });
         setRoundOptions(rounds);
       } catch (error) {
         console.log(error);
       }
     }
     getData();
-  }, [selectedOption]);
+  }, [taskInfo["task"]]);
+
+  const handleRound = (event) => {
+    const newTaskRound = {
+      actual: parseInt(event.currentTarget.value),
+      last: taskInfo["round"]["last"],
+    };
+    setTaskInfo({
+      ...taskInfo,
+      ["round"]: { ...newTaskRound },
+    });
+  };
+
+  const handleTaskSelected = (value) => {
+    setTaskInfo({
+      ...taskInfo,
+      ["task"]: parseInt(value),
+    });
+  };
 
   return (
     <>
@@ -50,8 +76,8 @@ export const WaterList = () => {
           <Form.Select
             size="sm"
             defaultValue={""}
-            onChange={(e) => setSelectedOption(e.currentTarget.value)}
-            style={{width: "180px"}}
+            onChange={(e) => handleTaskSelected(e.currentTarget.value)}
+            style={{ width: "180px" }}
             className="me-3"
           >
             <option disabled value={""}>
@@ -64,19 +90,17 @@ export const WaterList = () => {
             ))}
           </Form.Select>
           {roundOptions.length > 0 && (
-            <Form.Select 
-                size="sm" 
-                defaultValue={numberRoundDefault}
-                onChange={(e) => setNumberRound(e.currentTarget.value)}
-                style={{width: "100px"}}
+            <Form.Select
+              size="sm"
+              defaultValue={numberRoundDefault}
+              onChange={(e) => handleRound(e)}
+              style={{ width: "100px" }}
             >
               <option disabled value={""}>
                 Seleccione una ronda
               </option>
               {roundOptions.map((value, key) => (
-                <option 
-                  key={key} 
-                  value={value}>
+                <option key={key} value={value}>
                   {value}
                 </option>
               ))}
@@ -88,15 +112,13 @@ export const WaterList = () => {
         <thead>
           <tr>
             <th>Nombre</th>
-            <th className="text-center">
-              Veces Cumplidas
-            </th>
+            <th className="text-center">Veces Cumplidas</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {persons.map((person, index) => {
-            return <WaterItem key={index} {...person} />;
+            return <TaskItem key={index} {...person} />;
           })}
         </tbody>
       </Table>
