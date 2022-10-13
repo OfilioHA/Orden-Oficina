@@ -1,8 +1,7 @@
-import { Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faDroplet, faStore, faCakeCandles, faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faCakeCandles, faPowerOff, faStore } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Nav } from "react-bootstrap";
 import { logout } from "../../libs/auth";
 
 export function SideBar() {
@@ -13,8 +12,8 @@ export function SideBar() {
       to: "/home",
     },
     {
-      title: "Agua",
-      icon: faDroplet,
+      title: "Tareas",
+      icon: faStore,
       to: "/tasks",
     },
     {

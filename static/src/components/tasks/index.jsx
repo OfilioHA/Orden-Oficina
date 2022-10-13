@@ -7,7 +7,7 @@ export const Task = () => {
   return (
     <Row className="justify-content-between">
       <Col md={7}>
-          <TaskList />
+        <TaskList />
       </Col>
       <Col md={5}>
         <TaskForm />

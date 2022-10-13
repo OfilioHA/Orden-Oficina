@@ -8,12 +8,12 @@ class Gender(db.Model, SerializerMixin):
     abbreviation = db.Column(db.String(2))
     name = db.Column(db.String(12))
 
-class Action(db.Model):
+class Action(db.Model, SerializerMixin):
     __tablename__ = "actions"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12))
 
-class PersonalType(SerializerMixin, db.Model):
+class PersonalType(db.Model, SerializerMixin):
     __tablename__ = "personal_type"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12))

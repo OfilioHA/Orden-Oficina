@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { taskInfoStore, taskPersonStore } from "../../stores/taskPerson";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 export const TaskForm = () => {
   const [taskPerson, setTaskPerson] = useRecoilState(taskPersonStore);
@@ -18,7 +19,9 @@ export const TaskForm = () => {
     if (!task.id) {
       const now = new Date();
       task.date = now.toISOString().substr(0, 10);
-      task.time = now.getHours() + ':' + now.getMinutes();
+      let hours = (now.getHours()>=10) ? now.getHours() : `0${now.getHours()}`
+      let minutes = (now.getMinutes()>=10) ? now.getMinutes() : `0${now.getMinutes()}`
+      task.time = `${hours}:${minutes}`;
     }
     setDate(task.date);
     setTime(task.time);
@@ -40,6 +43,14 @@ export const TaskForm = () => {
     }
   
     if(taskPerson.task) json['accomplished_id'] = taskPerson.task.id
+
+    axios.post('/tasks/create', json)
+    .then((response)=> {
+      console.log(response.data);
+    })
+    .catch((error)=> {
+      console.log(error);
+    })
 
     console.log(json);
   }

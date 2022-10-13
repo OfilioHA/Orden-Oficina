@@ -13,6 +13,7 @@ app = Flask(__name__,
     template_folder = os.getenv("TEMPLATE_DIR"),
     static_folder   = os.getenv("STATIC_DIR") 
 )
+
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["JWT_ACCESS_LIFESPAN"] = {"hours": int(os.getenv("JWT_ACC_LFSPN"))}
 app.config["JWT_REFRESH_LIFESPAN"] = {"days": int(os.getenv("JWT_REF_LFSPN"))}
@@ -24,13 +25,19 @@ guard = Praetorian()
 cors = CORS()
 
 # Init all flask extensions
-from models.user import User
+from models import User;
 
 migrate = Migrate(app, db)
 guard.init_app(app, User)
 cors.init_app(app)
 db.init_app(app)
 
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path):
+    return render_template("index.html")
+
+from controllers.loginController import *
 from controllers.personalController import *
 from controllers.taskController import *
 
@@ -45,19 +52,5 @@ with app.app_context():
             ))
     db.session.commit()
 
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def index(path):
-    return render_template("index.html")
-
-@app.route("/api/login", methods=["POST"])
-def login():
-    req = request.get_json(force=True)
-    username = req.get("username", None)
-    password = req.get("password", None)
-    user = guard.authenticate(username, password)
-    ret = {
-        "accessToken": guard.encode_jwt_token(user),
-        "refreshToken": guard.encode_jwt_token(user),
-    }
-    return ret, 200
+#ToDo:: Usar Marshmallow para las validaciones
+# https://stackoverflow.com/questions/61644396/flask-how-to-make-validation-on-request-json-and-json-schema

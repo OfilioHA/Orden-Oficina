@@ -1,14 +1,12 @@
-from crypt import methods
-from pprint import pprint
 from app import app, db
-from models.personal import Personal;
-from models.user import User;
-from models.system import System;
+from models.Personal import Personal;
+from models.User import User;
+from models.System import System;
 from models.Task import Task;
-from models.taskround import TaskRounds;
+from models.TaskRound import TaskRounds;
 from models.TaskCan import TaskCan;
 from models.TaskAccomplished import TaskAccomplished;
-from models.catalogs import Gender;
+from models.Catalogs import Gender;
 from flask import jsonify, request;
 
 @app.route("/personal/list")

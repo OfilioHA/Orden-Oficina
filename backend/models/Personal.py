@@ -1,9 +1,4 @@
 from app import db
-from models.taskround import TaskRounds;
-from .catalogs import *
-from models.system import System
-from models.user import User
-from sqlalchemy.inspection import inspect;
 from sqlalchemy_serializer import SerializerMixin;
 
 personal_system = db.Table('personal_system',
@@ -58,8 +53,8 @@ class Personal(db.Model, SerializerMixin):
     )
 
     def list(self):
-        listToReturn = [];
-        personalList = self.query.all();
-        for entity in personalList:
-            listToReturn.append(entity.to_dict());
-        return listToReturn
+        listtoreturn = [];
+        personallist = self.query.all();
+        for entity in personallist:
+            listtoreturn.append(entity.to_dict());
+        return listtoreturn
