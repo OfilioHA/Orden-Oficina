@@ -1,8 +1,7 @@
 import os;
-from app import db, app
+from app import app
 
 def main():
-    db.create_all()
     app.run(
         host=os.getenv('HOST'),
         debug=os.getenv('DEBUG'),

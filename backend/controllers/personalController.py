@@ -1,7 +1,5 @@
 from app import app, db
 from models.Personal import Personal;
-from models.User import User;
-from models.System import System;
 from models.Task import Task;
 from models.TaskRound import TaskRounds;
 from models.TaskCan import TaskCan;
@@ -13,6 +11,9 @@ from flask import jsonify, request;
 def personallist():
     personal = Personal.list();
     return jsonify(personal);   
+
+# TODO:: Aplicar Subquery para ordenar en base a la ultima tarea cumplida.
+# https://stackoverflow.com/questions/38999534/execute-flask-sqlalchemy-subquery
 
 @app.route("/personal/<int:id>/tasks")
 def personaltask(id):

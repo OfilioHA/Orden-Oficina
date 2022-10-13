@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_praetorian import Praetorian, auth_required
-from sqlalchemy.inspection import inspect
+from flask_praetorian import Praetorian
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -25,7 +24,7 @@ guard = Praetorian()
 cors = CORS()
 
 # Init all flask extensions
-from models import User;
+from models import *;
 
 migrate = Migrate(app, db)
 guard.init_app(app, User)
@@ -37,20 +36,19 @@ db.init_app(app)
 def index(path):
     return render_template("index.html")
 
-from controllers.loginController import *
-from controllers.personalController import *
-from controllers.taskController import *
+from controllers import *;
 
 with app.app_context():
     db.create_all()
     if db.session.query(User).filter_by(username='Yasoob').count() < 1:
         db.session.add(User(
-          username='Yasoob',
-          password=guard.hash_password('strongpassword'),
-          personal_id=1,
-          roles='admin'
-            ))
+                username='Yasoob',
+                password=guard.hash_password('strongpassword'),
+                personal_id=1,
+                roles='admin'
+            )
+        )
     db.session.commit()
 
-#ToDo:: Usar Marshmallow para las validaciones
+# TODO:: Usar Marshmallow para las validaciones
 # https://stackoverflow.com/questions/61644396/flask-how-to-make-validation-on-request-json-and-json-schema

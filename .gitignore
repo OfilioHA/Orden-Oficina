@@ -2,6 +2,7 @@
 /static/public/*
 __pycache__
 /.idea
-/Pipfile.lock
+Pipfile.lock
+package-lock.json
 /.vscode
 /backend/database/*

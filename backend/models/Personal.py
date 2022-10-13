@@ -3,7 +3,7 @@ from sqlalchemy_serializer import SerializerMixin;
 
 personal_system = db.Table('personal_system',
     db.Column("id", db.Integer, primary_key=True),
-    db.Column('system_id', db.Integer, db.ForeignKey('system.id'), primary_key=True),
+    db.Column('area_id', db.Integer, db.ForeignKey('area.id'), primary_key=True),
     db.Column('personal_id', db.Integer, db.ForeignKey('personal.id'), primary_key=True)
 )
 
@@ -13,7 +13,7 @@ class Personal(db.Model, SerializerMixin):
         '-taskscan.personal',
         '-gender.personal', 
         '-type.personal', 
-        '-systems.personal',
+        '-areas.personal',
         '-user.personal',
     )
 
@@ -38,8 +38,8 @@ class Personal(db.Model, SerializerMixin):
         foreign_keys="User.personal_id"
     )
 
-    systems = db.relationship(
-        "System",
+    areas = db.relationship(
+        "Area",
         secondary=personal_system,
         lazy="subquery",
         backref=db.backref("personal", lazy=True),
