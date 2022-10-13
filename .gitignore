@@ -1,5 +1,5 @@
 /node_modules
-/static/pubic/*
+/static/public/*
 __pycache__
 /.idea
 /Pipfile.lock
