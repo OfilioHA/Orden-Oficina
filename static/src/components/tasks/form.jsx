@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { taskInfoStore, taskPersonStore } from "../../stores/taskPerson";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { authFetch } from "../../libs/auth";
 import axios from "axios";
 
 export const TaskForm = () => {
@@ -19,8 +20,9 @@ export const TaskForm = () => {
     if (!task.id) {
       const now = new Date();
       task.date = now.toISOString().substr(0, 10);
-      let hours = (now.getHours()>=10) ? now.getHours() : `0${now.getHours()}`
-      let minutes = (now.getMinutes()>=10) ? now.getMinutes() : `0${now.getMinutes()}`
+      let hours = now.getHours() >= 10 ? now.getHours() : `0${now.getHours()}`;
+      let minutes =
+        now.getMinutes() >= 10 ? now.getMinutes() : `0${now.getMinutes()}`;
       task.time = `${hours}:${minutes}`;
     }
     setDate(task.date);
@@ -31,39 +33,43 @@ export const TaskForm = () => {
     setTaskPerson(null);
     setDate("");
     setTime("");
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const json = {
-      date, 
+      date,
       time,
       person: taskPerson.id,
-      task_id: taskInfo['task']
-    }
-  
-    if(taskPerson.task) json['accomplished_id'] = taskPerson.task.id
+      task_id: taskInfo["task"],
+    };
 
-    axios.post('/tasks/create', json)
-    .then((response)=> {
-      console.log(response.data);
-    })
-    .catch((error)=> {
-      console.log(error);
-    })
+    if (taskPerson.task) json["accomplished_id"] = taskPerson.task.id;
 
-    console.log(json);
-  }
+    authFetch("/tasks/create", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(json),
+    })
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Card>
       <Card.Header>
         <div className="d-flex justify-content-end">
-            <FontAwesomeIcon 
-                icon={faXmark} 
-                style={{cursor: "pointer"}}
-                onClick={cleanAll}
-            />
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{ cursor: "pointer" }}
+            onClick={cleanAll}
+          />
         </div>
       </Card.Header>
       <Card.Body>
@@ -82,15 +88,20 @@ export const TaskForm = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Hora <span className="text-muted">24hrs</span></Form.Label>
-            <Form.Control 
-              type="time" 
+            <Form.Label>
+              Hora <span className="text-muted">24hrs</span>
+            </Form.Label>
+            <Form.Control
+              type="time"
               value={time}
               disabled={taskPerson && taskPerson.task}
               onChange={(e) => setTime(e.currentTarget.value)}
             />
           </Form.Group>
-          <Button type="submit" disabled={!taskPerson || (taskPerson && taskPerson.task)}>
+          <Button
+            type="submit"
+            disabled={!taskPerson || (taskPerson && taskPerson.task)}
+          >
             Agregar
           </Button>
         </Form>

@@ -31,13 +31,6 @@ class Personal(db.Model, SerializerMixin):
     type_id = db.Column(db.Integer, db.ForeignKey("personal_type.id"), nullable=False)
     type = db.relationship("PersonalType", backref=db.backref("personal", lazy="dynamic"))
 
-    user = db.relationship(
-        "User", 
-        backref="personal", 
-        lazy=True, 
-        foreign_keys="User.personal_id"
-    )
-
     areas = db.relationship(
         "Area",
         secondary=personal_system,
