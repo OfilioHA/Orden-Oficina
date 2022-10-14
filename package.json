@@ -19,7 +19,7 @@
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "react-token-auth": "^2.3.8",
+    "react-token-auth": "2.3.6",
     "recoil": "^0.7.5",
     "sass": "^1.43.3",
     "webpack": "^5.59.1",
