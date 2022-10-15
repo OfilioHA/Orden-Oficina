@@ -5,6 +5,7 @@ import { OverlayTrigger, Tooltip, Nav } from "react-bootstrap";
 import { logout } from "../../libs/auth";
 
 export function SideBar() {
+  //Todo:: Añadir una seccion de ruleta (Shuffle)
   const secciones = [
     {
       title: "Home",
