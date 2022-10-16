@@ -1,8 +1,8 @@
-from app import db
-from models.Personal import Personal
-from models.TaskAccomplished import TaskAccomplished;
-from models.TaskRound import TaskRounds;
-from models.Task import Task;
+from manage import db
+from entities.models.Personal import Personal
+from entities.models.TaskAccomplished import TaskAccomplished;
+from entities.models.TaskRound import TaskRounds;
+from entities.models.Task import Task;
 
 class TaskRoundService():
     model = TaskRounds;

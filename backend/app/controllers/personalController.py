@@ -1,10 +1,10 @@
-from app import app, db
-from models.Personal import Personal;
-from models.Task import Task;
-from models.TaskRound import TaskRounds;
-from models.TaskCan import TaskCan;
-from models.TaskAccomplished import TaskAccomplished;
-from models.Catalogs import Gender;
+from manage import app, db
+from entities.models import Personal;
+from entities.models import Task;
+from entities.models import TaskRounds;
+from entities.models import TaskCan;
+from entities.models import TaskAccomplished;
+from entities.models import Gender;
 from flask import jsonify, request;
 
 @app.route("/personal/list")

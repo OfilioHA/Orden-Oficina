@@ -24,7 +24,7 @@ guard = Praetorian()
 cors = CORS()
 
 # Init all flask extensions
-from models import *;
+from entities.models import *;
 
 migrate = Migrate(app, db)
 guard.init_app(app, User)
@@ -36,7 +36,7 @@ db.init_app(app)
 def index(path):
     return render_template("index.html")
 
-from controllers import *;
+from app.controllers import *;
 
 with app.app_context():
     db.create_all()

@@ -1,10 +1,10 @@
-from app import app, db;
+from manage import app, db;
 from flask import jsonify, request;
 from flask_praetorian import auth_required;
 
-from services.TaskRoundService import TaskRoundService
-from models.Task import Task;
-from models.TaskAccomplished import TaskAccomplished;
+from app.services import TaskRoundService
+from entities.models import Task;
+from entities.models import TaskAccomplished;
 
 
 @app.route("/tasks/list")

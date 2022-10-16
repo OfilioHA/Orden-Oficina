@@ -1,4 +1,4 @@
-from app import db
+from manage import db
 from sqlalchemy_serializer import SerializerMixin;
 
 class TaskRounds(db.Model, SerializerMixin):

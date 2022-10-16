@@ -1,5 +1,5 @@
 import os;
-from app import app
+from manage import app
 
 def main():
     app.run(

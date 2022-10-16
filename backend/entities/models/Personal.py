@@ -1,4 +1,4 @@
-from app import db
+from manage import db
 from sqlalchemy_serializer import SerializerMixin;
 
 personal_system = db.Table('personal_system',

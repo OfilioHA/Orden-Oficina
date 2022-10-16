@@ -1,7 +1,7 @@
 from importlib import import_module
 from sqlalchemy.ext.declarative import declared_attr;
 from flask_praetorian import current_user_id;
-from app import db;
+from manage import db;
 
 
 class UserMixin (object):   

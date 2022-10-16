@@ -1,6 +1,4 @@
-import json
-from pprint import pprint
-from app import guard, app;
+from manage import guard, app;
 from flask import jsonify, request
 
 @app.route("/api/login", methods=["POST"])
