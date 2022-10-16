@@ -6,3 +6,4 @@ Pipfile.lock
 package-lock.json
 /.vscode
 /backend/database/*
+/templates/*
