@@ -18,6 +18,7 @@ app.config["JWT_ACCESS_LIFESPAN"] = {"hours": int(os.getenv("JWT_ACC_LFSPN"))}
 app.config["JWT_REFRESH_LIFESPAN"] = {"days": int(os.getenv("JWT_REF_LFSPN"))}
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.getenv("DB_ADDR")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.getenv("TRACK_MOD")
+app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
 guard = Praetorian()

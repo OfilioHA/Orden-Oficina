@@ -1,0 +1,3 @@
+
+class TaskRoundFullTasks(Exception):
+    pass;

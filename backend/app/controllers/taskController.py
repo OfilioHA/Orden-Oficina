@@ -2,10 +2,13 @@ from manage import app, db;
 from flask import jsonify, request;
 from flask_praetorian import auth_required;
 
-from app.services import TaskRoundService
+from app.services import TaskRoundService;
+from app.services import TaskAccomplishedService;
+
 from entities.models import Task;
 from entities.models import TaskAccomplished;
 
+from app.exceptions.TaskRoundExceptions import TaskRoundFullTasks;
 
 @app.route("/tasks/list")
 def taskslist():
@@ -17,20 +20,22 @@ def taskslist():
 def taskcreate():
     try: 
         req = request.get_json(force=True);
-        actualround = TaskRoundService.lastround(req["task_id"]).id;
-        amountround = TaskRoundService.getamount(actualround, req["person"]);
-        if(amountround >= 3): raise Exception("Ronda cumplida");
-        newtask = TaskAccomplished(
-            req["task_id"],
-            actualround,
-            req["person"],
+        task_id = req["task_id"];
+        person_id = req["person"];
+        actual_round_id = TaskRoundService.last_round(task_id).id;
+        TaskRoundService.validate_tasks_amount(
+            actual_round_id, 
+            person_id
+        );
+        new_task = TaskAccomplishedService.create(
+            task_id,
+            actual_round_id,
+            person_id,
             req["date"],
             req["time"]
-        );
-        db.session.add(newtask);
-        db.session.commit();
-        return jsonify(newtask.to_dict), 200
-    except Exception as error: 
+        )
+        return jsonify(new_task.to_dict()), 200
+    except TaskRoundFullTasks as error: 
         return jsonify({
             "status": False,
             "message": str(error)

@@ -3,25 +3,25 @@ from entities.models.Personal import Personal
 from entities.models.TaskAccomplished import TaskAccomplished;
 from entities.models.TaskRound import TaskRounds;
 from entities.models.Task import Task;
+from entities.repositories.TaskRoundRepository import TaskRoundRepository;
+
+from app.exceptions.TaskRoundExceptions import TaskRoundFullTasks;
+
+MAX_AMOUNT = 3;
 
 class TaskRoundService():
-    model = TaskRounds;
 
     @staticmethod
-    def lastround(id):
-        return TaskRounds.query\
-            .join(Task)\
-            .filter(Task.id == id)\
-            .order_by(db.desc(TaskRounds.number))\
-            .first();
+    def last_round(id):
+        return TaskRoundRepository.task_active_round(id)
 
     @staticmethod
-    def getamount(id, person):
-        return TaskAccomplished.query\
-            .join(TaskRounds, TaskAccomplished.task_round_id == TaskRounds.id)\
-            .join(Personal, TaskAccomplished.personal_id == Personal.id)\
-            .filter(
-                TaskRounds.id == id,
-                Personal.id == person
-            ).count();
+    def validate_tasks_amount(actual_round, person):
+        tasks_accomplished = TaskRoundRepository.person_tasks_active_round(
+            actual_round, 
+            person
+        );
+        tasks_accomplished_amount = tasks_accomplished.count();
+        if(tasks_accomplished_amount >= MAX_AMOUNT): 
+            raise TaskRoundFullTasks("Ronda cumplida");
 

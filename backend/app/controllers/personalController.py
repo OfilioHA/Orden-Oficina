@@ -23,6 +23,7 @@ def personaltask(id):
         .join(Task)\
         .filter(Task.id == id)\
         .order_by(db.desc(TaskRounds.number))\
+        .group_by(Task.id)\
         .first();
 
     personal = Personal.query\
