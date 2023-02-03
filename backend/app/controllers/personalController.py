@@ -6,6 +6,7 @@ from entities.models import TaskCan;
 from entities.models import TaskAccomplished;
 from entities.models import Gender;
 from flask import jsonify, request;
+from app.services import TaskRoundService;
 
 @app.route("/personal/list")
 def personallist():
@@ -19,12 +20,7 @@ def personallist():
 def personaltask(id):
     listtoreturn = [];
 
-    activeround = TaskRounds.query\
-        .join(Task)\
-        .filter(Task.id == id)\
-        .order_by(db.desc(TaskRounds.number))\
-        .group_by(Task.id)\
-        .first();
+    activeround = TaskRoundService.last_round(id);
 
     personal = Personal.query\
         .join(Gender)\
