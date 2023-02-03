@@ -5,10 +5,9 @@ from flask_praetorian import auth_required;
 from app.services import TaskRoundService;
 from app.services import TaskAccomplishedService;
 
-from entities.models import Task;
-from entities.models import TaskAccomplished;
+from app.exceptions import TaskRoundFullTasks;
 
-from app.exceptions.TaskRoundExceptions import TaskRoundFullTasks;
+from entities.models import Task;
 
 @app.route("/tasks/list")
 def taskslist():
