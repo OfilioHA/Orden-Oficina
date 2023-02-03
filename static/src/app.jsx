@@ -5,6 +5,7 @@ import { Layout } from "./components/utils/base";
 import { Home } from "./components/home";
 import { Task } from "./components/tasks";
 import { Birthdays } from "./components/birthdays";
+import { Register } from "./components/register";
 
 export const App = () => {
   const [isLogged] = useAuth();
@@ -16,6 +17,10 @@ export const App = () => {
             <Route 
               path="/login" 
               element={<Login />} 
+            />
+            <Route 
+              path="/register" 
+              element={<Register />} 
             />
             <Route 
               path="*"
