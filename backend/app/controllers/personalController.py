@@ -1,15 +1,13 @@
 from flask import jsonify, request;
 from manage import app
 from entities.models import Personal;
-from entities.models import Task;
-from entities.models import TaskRounds;
-from entities.models import TaskCan;
-from entities.models import TaskAccomplished;
-from entities.models import Gender;
+
 from app.services import TaskRoundService;
+from app.services import PersonalService;
+from app.services import TaskAccomplishedService;
 
 @app.route("/personal/list")
-def personallist():
+def personal_list():
     personal = Personal.list();
     return jsonify(personal);   
 
@@ -18,48 +16,14 @@ def personallist():
 
 @app.route("/personal/<int:id>/tasks")
 def personaltask(id):
-    listtoreturn = [];
 
-    activeround = TaskRoundService.last_round(id);
-
-    personal = Personal.query\
-        .join(Gender)\
-        .join(TaskCan)\
-        .join(Task)\
-        .filter(
-            Gender.id != 2,
-            Task.id == id,
-        ).all()
-
-    for entity in personal:
-
-        entry = entity.to_dict(
-            only=('id','firstnames', 'lastnames',),
-        )
-
-        tasklist =  TaskAccomplished.query\
-            .join(Task, TaskAccomplished.task_id == Task.id)\
-            .join(TaskRounds, TaskAccomplished.task_round_id == TaskRounds.id)\
-            .join(Personal, TaskAccomplished.personal_id == Personal.id)\
-            .filter(
-                Personal.id == entity.id,
-                TaskRounds.id == activeround.id
-            ).all()
-
-
-        entry['taskaccomplished'] = []
-        for task in tasklist:
-            entry['taskaccomplished']\
-                .append(task.to_dict(
-                    rules=('-personal',)
-                )
-            );
-
-        listtoreturn.append(entry);
-
+    active_round = TaskRoundService.last_round(id);
+    personal = PersonalService.from_task(id);
+    personal = TaskAccomplishedService.from_person_dicts(personal, active_round);
+    
     return jsonify({
-        "list": listtoreturn,
-        "round": activeround.number
+        "list": personal,
+        "round": active_round.number
     })
 
 @app.route("/personal/<int:id>/tasks", methods=['POST'])

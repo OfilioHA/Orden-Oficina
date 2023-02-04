@@ -46,8 +46,4 @@ class Personal(db.Model, SerializerMixin):
     )
 
     def list(self):
-        listtoreturn = [];
-        personallist = self.query.all();
-        for entity in personallist:
-            listtoreturn.append(entity.to_dict());
-        return listtoreturn
+        return [system.to_dict() for system in self.query.all()]
