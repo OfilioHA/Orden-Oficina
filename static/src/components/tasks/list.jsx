@@ -27,8 +27,8 @@ export const TaskList = () => {
     }
     getData();
     return () => {
-      resetTaskInfoStore()
-      resetTaskPersonStore()
+      resetTaskInfoStore();
+      resetTaskPersonStore();
     };
   }, []);
 
