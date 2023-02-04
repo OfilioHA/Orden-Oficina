@@ -36,7 +36,7 @@ export const TaskList = () => {
     if (!taskInfo["task"]) return;
     async function getData() {
       try {
-        const response = await axios.get(`/personal/${taskInfo["task"]}/tasks`);
+        const response = await axios.get(`/tasks/${taskInfo["task"]}/personal`);
         const { data } = response;
         setPersons(data.list);
         numberRoundDefault = data.round;

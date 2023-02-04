@@ -46,7 +46,7 @@ export const TaskForm = () => {
 
     if (taskPerson.task) json["accomplished_id"] = taskPerson.task.id;
 
-    authFetch("/tasks/create", {
+    authFetch("/tasks/accomplished/create", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

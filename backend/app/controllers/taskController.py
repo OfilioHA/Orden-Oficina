@@ -4,19 +4,33 @@ from flask_praetorian import auth_required;
 
 from app.services import TaskRoundService;
 from app.services import TaskAccomplishedService;
+from app.services import PersonalService;
 
 from app.exceptions import TaskRoundFullTasks;
 
 from entities.models import Task;
 
 @app.route("/tasks/list")
-def taskslist():
+def tasks_list():
     tasks = Task().list();
-    return jsonify(tasks);   
+    return jsonify(tasks);
 
-@app.route("/tasks/create", methods=["POST"])
+
+@app.route("/tasks/<int:id>/personal")
+def personal_task(id):
+
+    active_round = TaskRoundService.last_round(id);
+    personal = PersonalService.from_task(id);
+    personal = TaskAccomplishedService.from_person_dicts(personal, active_round);
+    
+    return jsonify({
+        "list": personal,
+        "round": active_round.number
+    })
+
+@app.route("/tasks/accomplished/create", methods=["POST"])
 @auth_required
-def taskcreate():
+def task_accomplished_create():
     try: 
         req = request.get_json(force=True);
         task_id = req["task_id"];
