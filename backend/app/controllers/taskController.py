@@ -28,6 +28,9 @@ def personal_task(id):
         "round": active_round.number
     })
 
+
+# TODO:: Aplicar Subquery para ordenar en base a la ultima tarea cumplida.
+# https://stackoverflow.com/questions/38999534/execute-flask-sqlalchemy-subquery
 @app.route("/tasks/accomplished/create", methods=["POST"])
 @auth_required
 def task_accomplished_create():
