@@ -1,7 +1,5 @@
 import {
   Form,
-  FormCheck,
-  FormControl,
   FormGroup,
   FormLabel,
   Button,
@@ -11,10 +9,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
-import { useCallback, useEffect } from "react";
-import { authFetch } from "../../libs/auth";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { TextField } from "../utils/forms/TextField";
+import { RadioField } from "../utils/forms/RadioField";
 
 export function RegisterForm() {
+  const defaultState = {
+    loading: true,
+    data: [],
+  };
+
+  const [systems, setSystems] = useState(defaultState);
+  const [types, setTypes] = useState(defaultState);
+  const [genders, setGenders] = useState(defaultState);
+
+  useEffect(() => {
+    (async function () {
+      const fetchs = [
+        fetch("/systems"),
+        fetch("/personal/types"),
+        fetch("/personal/genders"),
+      ];
+
+      const setters = [setSystems, setTypes, setGenders];
+
+      const data = await Promise.all(fetchs);
+      data.forEach(async (respond, index) => {
+        const values = await respond.json();
+        const newState = {
+          data: values,
+          loading: false,
+        };
+        setters[index](newState);
+      });
+    })();
+  }, []);
+
+  const system_formated = useMemo(
+    () =>
+      systems.data.map((e) => {
+        return {
+          labelKey: e.id,
+          value: e.name,
+        };
+      }),
+    [systems]
+  );
+
   const validationSchema = Yup.object({
     firstnames: Yup.string().required(),
     lastnames: Yup.string().required(),
@@ -25,27 +66,17 @@ export function RegisterForm() {
   });
 
   const initialValues = {
-    firstnames: '',
-    lastnames: '',
-    birthday: '',
-    gender_id: '',
-    type_id: '',
-    systems: []
-  }
+    firstnames: "",
+    lastnames: "",
+    birthday: "",
+    gender_id: "",
+    type_id: "",
+    systems: [],
+  };
 
   const hanleSubmitFormik = useCallback((values) => {
     console.log(values);
   });
-
-  
-  useEffect(()=>{
-    (async function(){
-      const fetchs = [
-        authFetch('/systems')
-      ]
-      const data = await Promise.all(fetchs);
-    })();
-  }, []);
 
   return (
     <Formik
@@ -55,49 +86,59 @@ export function RegisterForm() {
       validateOnChange={false}
       validateOnBlur={false}
     >
-      {({handleSubmit, isSubmitting}) => (
-        <Form
-          onSubmit={handleSubmit}
-        >
-          <FormGroup className="mb-3">
-            <FormLabel>Nombres</FormLabel>
-            <FormControl />
-          </FormGroup>
-          <FormGroup className="mb-3">
-            <FormLabel>Apellidos</FormLabel>
-            <FormControl />
-          </FormGroup>
-          <FormGroup className="mb-3">
-            <FormLabel>Fecha de Nacimiento</FormLabel>
-            <FormControl />
-          </FormGroup>
-          <FormGroup className="mb-3 d-flex justify-content-between">
-            <div>
-              <FormLabel>Genero</FormLabel>
-              <div>
-                <FormCheck type="radio" label="Hombre" inline />
-                <FormCheck type="radio" label="Mujer" inline />
-              </div>
-            </div>
-            <div>
-              <FormLabel>Tipo</FormLabel>
-              <div>
-                <FormCheck type="radio" label="Trabajador" inline />
-                <FormCheck type="radio" label="Pasante" inline />
-              </div>
-            </div>
-          </FormGroup>
+      {({ handleSubmit, isSubmitting }) => (
+        <Form onSubmit={handleSubmit}>
+          <Field
+            type="text"
+            label="Nombres"
+            name="firstnames"
+            component={TextField}
+            id="personal-firstnames"
+          />
+          <Field
+            type="text"
+            label="Apellidos"
+            name="lastnames"
+            component={TextField}
+            id="personal-lastnames"
+          />
+          <Field
+            type="date"
+            label="Fecha de Nacimiento"
+            name="birthday"
+            component={TextField}
+            id="personal-birthday"
+          />
+          <div className="d-flex justify-content-between">
+            <Field
+              type="radio"
+              label="Genero"
+              name="gender_id"
+              id="personal-gender"
+              component={RadioField}
+              options={genders.data}
+            />
+            <Field
+              type="radio"
+              label="Tipo"
+              name="type_id"
+              id="personal-type"
+              component={RadioField}
+              options={types.data}
+            />
+          </div>
           <FormGroup className="mb-5">
             <FormLabel>Sistemas</FormLabel>
             <BootstrapSelect
-              options={[]}
+              options={system_formated}
+              disabled={systems.loading}
               className="d-block w-100"
-              isMultiSelect
               placeholder="Seleccione los sistemas"
+              isMultiSelect
             />
           </FormGroup>
           <FormGroup className="d-flex justify-content-end">
-            <Button disabled={isSubmitting}>
+            <Button disabled={isSubmitting} type="submit">
               Registrarme
               <FontAwesomeIcon icon={faRocket} className="ms-2" />
             </Button>
