@@ -1,9 +1,4 @@
-import {
-  Form,
-  FormGroup,
-  FormLabel,
-  Button,
-} from "react-bootstrap";
+import { Form, FormGroup, FormLabel, Button } from "react-bootstrap";
 import BootstrapSelect from "react-bootstrap-select-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
@@ -22,6 +17,7 @@ export function RegisterForm() {
   const [systems, setSystems] = useState(defaultState);
   const [types, setTypes] = useState(defaultState);
   const [genders, setGenders] = useState(defaultState);
+  const [tasks, setTasks] = useState(defaultState);
 
   useEffect(() => {
     (async function () {
@@ -29,9 +25,10 @@ export function RegisterForm() {
         fetch("/systems"),
         fetch("/personal/types"),
         fetch("/personal/genders"),
+        fetch("/tasks/list"),
       ];
 
-      const setters = [setSystems, setTypes, setGenders];
+      const setters = [setSystems, setTypes, setGenders, setTasks];
 
       const data = await Promise.all(fetchs);
       data.forEach(async (respond, index) => {
@@ -123,11 +120,12 @@ export function RegisterForm() {
               label="Tipo"
               name="type_id"
               id="personal-type"
+              className="me-5"
               component={RadioField}
               options={types.data}
             />
           </div>
-          <FormGroup className="mb-5">
+          <FormGroup className="mb-3">
             <FormLabel>Sistemas</FormLabel>
             <BootstrapSelect
               options={system_formated}
@@ -137,6 +135,14 @@ export function RegisterForm() {
               isMultiSelect
             />
           </FormGroup>
+          <Field
+            type="checkbox"
+            label="Tareas que realiza"
+            name="task_id"
+            id="personal-tasks"
+            component={RadioField}
+            options={tasks.data}
+          />
           <FormGroup className="d-flex justify-content-end">
             <Button disabled={isSubmitting} type="submit">
               Registrarme
