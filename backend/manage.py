@@ -13,14 +13,18 @@ app = Flask(__name__,
     static_folder   = os.getenv("STATIC_DIR") 
 )
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+database = os.path.join(basedir, os.getenv("DB_ADDR"));
+
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["JWT_ACCESS_LIFESPAN"] = {"hours": int(os.getenv("JWT_ACC_LFSPN"))}
 app.config["JWT_REFRESH_LIFESPAN"] = {"days": int(os.getenv("JWT_REF_LFSPN"))}
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.getenv("DB_ADDR")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + database
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.getenv("TRACK_MOD")
 app.config['SQLALCHEMY_ECHO'] = True
+app.config["SQLALCHEMY_RECORD_QUERIES"] = True
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 guard = Praetorian()
 cors = CORS()
 
