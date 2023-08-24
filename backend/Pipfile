@@ -13,6 +13,7 @@ flask_cors = "*"
 flask-praetorian = "*"
 sqlalchemy-serializer = "*"
 faker = "*"
+colorama = "*"
 
 [dev-packages]
 autopep8 = "*"
