@@ -31,7 +31,7 @@ cors = CORS()
 # Init all flask extensions
 from entities.models import *;
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, directory="database/migrations")
 guard.init_app(app, User)
 cors.init_app(app)
 db.init_app(app)
