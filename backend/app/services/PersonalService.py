@@ -20,3 +20,16 @@ class PersonalService():
         if (not women): personal.filter(Gender.id != 2);
         
         return personal.all();
+
+    @staticmethod
+    def create(firstname, lastname, birthday, gender_id, type_id):
+        new_person = Personal(
+            firstname,
+            lastname,
+            birthday,
+            gender_id,
+            type_id
+        )
+        db.session.add(new_person);
+        db.session.commit();
+        return new_person; 

@@ -7,8 +7,12 @@ import * as Yup from "yup";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TextField } from "../utils/forms/TextField";
 import { RadioField } from "../utils/forms/RadioField";
+import { useFetch } from "../../hooks/useFetch";
 
 export function RegisterForm() {
+
+  const fetcher = useFetch();
+
   const defaultState = {
     loading: true,
     data: [],
@@ -72,7 +76,13 @@ export function RegisterForm() {
   };
 
   const hanleSubmitFormik = useCallback((values) => {
-    console.log(values);
+    (async function(){
+      const response = await fetcher.call('/personal', {
+        method: 'POST',
+        data: values
+      });
+      console.log(response);
+    })();
   });
 
   return (
@@ -144,7 +154,7 @@ export function RegisterForm() {
             options={tasks.data}
           />
           <FormGroup className="d-flex justify-content-end">
-            <Button disabled={isSubmitting} type="submit">
+            <Button disabled={fetcher.loading} type="submit">
               Registrarme
               <FontAwesomeIcon icon={faRocket} className="ms-2" />
             </Button>

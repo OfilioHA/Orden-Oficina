@@ -9,6 +9,15 @@ personal_system = db.Table('personal_system',
 
 class Personal(db.Model, SerializerMixin):
 
+
+    def __init__(self, firstname, lastname, birthday, gender_id, type_id):
+        self.firstnames = firstname;
+        self.lastnames = lastname;
+        self.birthday = birthday;
+        self.gender_id = gender_id;
+        self.type_id = type_id;
+        self.active = True
+
     serialize_rules = (
         '-taskscan.personal',
         '-gender.personal', 
